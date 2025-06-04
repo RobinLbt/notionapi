@@ -8,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/RobinLbt/notionapi"
+	"github.com/robinlbt/notionapi"
 )
 
 // RoundTripFunc .

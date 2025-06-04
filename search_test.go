@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/RobinLbt/notionapi"
+	"github.com/robinlbt/notionapi"
 )
 
 func TestSearchClient(t *testing.T) {

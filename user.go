@@ -29,7 +29,7 @@ type UserClient struct {
 //
 // See https://developers.notion.com/reference/get-users
 func (uc *UserClient) List(ctx context.Context, pagination *Pagination) (*UsersListResponse, error) {
-	res, err := uc.apiClient.request(ctx, http.MethodGet, "users", pagination.ToQuery(), nil)
+	res, err := uc.apiClient.request(ctx, http.MethodGet, "users", pagination.ToQuery(), nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (uc *UserClient) List(ctx context.Context, pagination *Pagination) (*UsersL
 //
 // See https://developers.notion.com/reference/get-user
 func (uc *UserClient) Get(ctx context.Context, id UserID) (*User, error) {
-	res, err := uc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("users/%s", id.String()), nil, nil)
+	res, err := uc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("users/%s", id.String()), nil, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (uc *UserClient) Get(ctx context.Context, id UserID) (*User, error) {
 //
 // See https://developers.notion.com/reference/get-self
 func (uc *UserClient) Me(ctx context.Context) (*User, error) {
-	res, err := uc.apiClient.request(ctx, http.MethodGet, "users/me", nil, nil)
+	res, err := uc.apiClient.request(ctx, http.MethodGet, "users/me", nil, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}

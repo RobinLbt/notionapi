@@ -41,7 +41,7 @@ type BlockClient struct {
 //
 // See https://developers.notion.com/reference/patch-block-children
 func (bc *BlockClient) AppendChildren(ctx context.Context, id BlockID, requestBody *AppendBlockChildrenRequest) (*AppendBlockChildrenResponse, error) {
-	res, err := bc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("blocks/%s/children", id.String()), nil, requestBody)
+	res, err := bc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("blocks/%s/children", id.String()), nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ type AppendBlockChildrenRequest struct {
 //
 // Get https://developers.notion.com/reference/retrieve-a-block
 func (bc *BlockClient) Get(ctx context.Context, id BlockID) (Block, error) {
-	res, err := bc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("blocks/%s", id.String()), nil, nil)
+	res, err := bc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("blocks/%s", id.String()), nil, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (bc *BlockClient) Get(ctx context.Context, id BlockID) (Block, error) {
 //
 // See https://developers.notion.com/reference/get-block-children
 func (bc *BlockClient) GetChildren(ctx context.Context, id BlockID, pagination *Pagination) (*GetChildrenResponse, error) {
-	res, err := bc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("blocks/%s/children", id.String()), pagination.ToQuery(), nil)
+	res, err := bc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("blocks/%s/children", id.String()), pagination.ToQuery(), nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ type GetChildrenResponse struct {
 //
 // See https://developers.notion.com/reference/update-a-block
 func (bc *BlockClient) Update(ctx context.Context, id BlockID, requestBody *BlockUpdateRequest) (Block, error) {
-	res, err := bc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("blocks/%s", id.String()), nil, requestBody)
+	res, err := bc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("blocks/%s", id.String()), nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ type BlockUpdateRequest struct {
 //
 // See https://developers.notion.com/reference/delete-a-block
 func (bc *BlockClient) Delete(ctx context.Context, id BlockID) (Block, error) {
-	res, err := bc.apiClient.request(ctx, http.MethodDelete, fmt.Sprintf("blocks/%s", id.String()), nil, nil)
+	res, err := bc.apiClient.request(ctx, http.MethodDelete, fmt.Sprintf("blocks/%s", id.String()), nil, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}

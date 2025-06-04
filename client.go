@@ -22,6 +22,13 @@ const (
 	maxRetries    = 3
 )
 
+type ContentType string
+
+const (
+	ContentTypeJSON     ContentType = "application/json"
+	ContentTypeFormData ContentType = "multipart/form-data"
+)
+
 type Token string
 
 type errJsonDecodeFunc func(data []byte) error
@@ -53,6 +60,7 @@ type Client struct {
 	User           UserService
 	Search         SearchService
 	Comment        CommentService
+	FileUpload     FileUploadService
 	Authentication AuthenticationService
 }
 
@@ -76,6 +84,7 @@ func NewClient(token Token, opts ...ClientOption) *Client {
 	c.User = &UserClient{apiClient: c}
 	c.Search = &SearchClient{apiClient: c}
 	c.Comment = &CommentClient{apiClient: c}
+	c.FileUpload = &FileUploadClient{apiClient: c}
 	c.Authentication = &AuthenticationClient{apiClient: c}
 
 	for _, opt := range opts {
@@ -114,11 +123,11 @@ func WithOAuthAppCredentials(id, secret string) ClientOption {
 	}
 }
 
-func (c *Client) request(ctx context.Context, method string, urlStr string, queryParams map[string]string, requestBody interface{}) (*http.Response, error) {
-	return c.requestImpl(ctx, method, urlStr, queryParams, requestBody, false, decodeClientError)
+func (c *Client) request(ctx context.Context, method string, urlStr string, queryParams map[string]string, requestBody interface{}, contentType ContentType) (*http.Response, error) {
+	return c.requestImpl(ctx, method, urlStr, queryParams, requestBody, false, contentType, decodeClientError)
 }
 
-func (c *Client) requestImpl(ctx context.Context, method string, urlStr string, queryParams map[string]string, requestBody interface{}, basicAuth bool, errDecoder errJsonDecodeFunc) (*http.Response, error) {
+func (c *Client) requestImpl(ctx context.Context, method string, urlStr string, queryParams map[string]string, requestBody interface{}, basicAuth bool, contentType ContentType, errDecoder errJsonDecodeFunc) (*http.Response, error) {
 	u, err := c.baseUrl.Parse(fmt.Sprintf("%s/%s", c.apiVersion, urlStr))
 	if err != nil {
 		return nil, err
@@ -152,7 +161,7 @@ func (c *Client) requestImpl(ctx context.Context, method string, urlStr string, 
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", c.Token.String()))
 	}
 	req.Header.Add("Notion-Version", c.notionVersion)
-	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Content-Type", string(contentType))
 
 	failedAttempts := 0
 	var res *http.Response

@@ -33,7 +33,7 @@ type DatabaseClient struct {
 //
 // See https://developers.notion.com/reference/create-a-database
 func (dc *DatabaseClient) Create(ctx context.Context, requestBody *DatabaseCreateRequest) (*Database, error) {
-	res, err := dc.apiClient.request(ctx, http.MethodPost, "databases", nil, requestBody)
+	res, err := dc.apiClient.request(ctx, http.MethodPost, "databases", nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ type DatabaseCreateRequest struct {
 //
 // See https://developers.notion.com/reference/post-database-query
 func (dc *DatabaseClient) Query(ctx context.Context, id DatabaseID, requestBody *DatabaseQueryRequest) (*DatabaseQueryResponse, error) {
-	res, err := dc.apiClient.request(ctx, http.MethodPost, fmt.Sprintf("databases/%s/query", id.String()), nil, requestBody)
+	res, err := dc.apiClient.request(ctx, http.MethodPost, fmt.Sprintf("databases/%s/query", id.String()), nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func (dc *DatabaseClient) Get(ctx context.Context, id DatabaseID) (*Database, er
 		return nil, errors.New("empty database id")
 	}
 
-	res, err := dc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("databases/%s", id.String()), nil, nil)
+	res, err := dc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("databases/%s", id.String()), nil, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (dc *DatabaseClient) Get(ctx context.Context, id DatabaseID) (*Database, er
 
 // Update https://developers.notion.com/reference/update-a-database
 func (dc *DatabaseClient) Update(ctx context.Context, id DatabaseID, requestBody *DatabaseUpdateRequest) (*Database, error) {
-	res, err := dc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("databases/%s", id.String()), nil, requestBody)
+	res, err := dc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("databases/%s", id.String()), nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}

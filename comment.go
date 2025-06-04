@@ -36,7 +36,7 @@ type CommentClient struct {
 //
 // See https://developers.notion.com/reference/create-a-comment
 func (cc *CommentClient) Create(ctx context.Context, requestBody *CommentCreateRequest) (*Comment, error) {
-	res, err := cc.apiClient.request(ctx, http.MethodPost, "comments", nil, requestBody)
+	res, err := cc.apiClient.request(ctx, http.MethodPost, "comments", nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (cc *CommentClient) Get(ctx context.Context, id BlockID, pagination *Pagina
 
 	queryParams["block_id"] = id.String()
 
-	res, err := cc.apiClient.request(ctx, http.MethodGet, "comments", queryParams, nil)
+	res, err := cc.apiClient.request(ctx, http.MethodGet, "comments", queryParams, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}

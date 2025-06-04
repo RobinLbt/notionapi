@@ -41,7 +41,7 @@ type PageClient struct {
 //
 // See https://developers.notion.com/reference/post-page
 func (pc *PageClient) Create(ctx context.Context, requestBody *PageCreateRequest) (*Page, error) {
-	res, err := pc.apiClient.request(ctx, http.MethodPost, "pages", nil, requestBody)
+	res, err := pc.apiClient.request(ctx, http.MethodPost, "pages", nil, requestBody, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ type PageCreateRequest struct {
 //
 // See https://developers.notion.com/reference/get-page
 func (pc *PageClient) Get(ctx context.Context, id PageID) (*Page, error) {
-	res, err := pc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("pages/%s", id.String()), nil, nil)
+	res, err := pc.apiClient.request(ctx, http.MethodGet, fmt.Sprintf("pages/%s", id.String()), nil, nil, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (pc *PageClient) Get(ctx context.Context, id PageID) (*Page, error) {
 //
 // See https://developers.notion.com/reference/patch-page
 func (pc *PageClient) Update(ctx context.Context, id PageID, request *PageUpdateRequest) (*Page, error) {
-	res, err := pc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("pages/%s", id.String()), nil, request)
+	res, err := pc.apiClient.request(ctx, http.MethodPatch, fmt.Sprintf("pages/%s", id.String()), nil, request, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}

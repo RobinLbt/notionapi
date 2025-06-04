@@ -160,10 +160,6 @@ type FileObject struct {
 	ExpiryTime *time.Time `json:"expiry_time,omitempty"`
 }
 
-type FileUpload struct {
-	ID string `json:"id"`
-}
-
 type Icon struct {
 	Type        FileType     `json:"type"`
 	Emoji       *Emoji       `json:"emoji,omitempty"`

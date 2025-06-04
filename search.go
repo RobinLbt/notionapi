@@ -30,7 +30,7 @@ type SearchClient struct {
 //
 // See https://developers.notion.com/reference/post-search
 func (sc *SearchClient) Do(ctx context.Context, request *SearchRequest) (*SearchResponse, error) {
-	res, err := sc.apiClient.request(ctx, http.MethodPost, "search", nil, request)
+	res, err := sc.apiClient.request(ctx, http.MethodPost, "search", nil, request, ContentTypeJSON)
 	if err != nil {
 		return nil, err
 	}

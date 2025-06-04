@@ -160,12 +160,17 @@ type FileObject struct {
 	ExpiryTime *time.Time `json:"expiry_time,omitempty"`
 }
 
+type FileUpload struct {
+	ID string `json:"id"`
+}
+
 type Icon struct {
 	Type        FileType     `json:"type"`
 	Emoji       *Emoji       `json:"emoji,omitempty"`
 	CustomEmoji *CustomEmoji `json:"custom_emoji,omitempty"`
 	File        *FileObject  `json:"file,omitempty"`
 	External    *FileObject  `json:"external,omitempty"`
+	FileUpload  *FileUpload  `json:"file_upload,omitempty"`
 }
 
 // GetURL returns the external or internal URL depending on the image type.

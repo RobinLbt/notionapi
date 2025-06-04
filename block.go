@@ -529,10 +529,11 @@ type ImageBlock struct {
 }
 
 type Image struct {
-	Caption  []RichText  `json:"caption,omitempty"`
-	Type     FileType    `json:"type,omitempty"`
-	File     *FileObject `json:"file,omitempty"`
-	External *FileObject `json:"external,omitempty"`
+	Caption    []RichText  `json:"caption,omitempty"`
+	Type       FileType    `json:"type,omitempty"`
+	File       *FileObject `json:"file,omitempty"`
+	External   *FileObject `json:"external,omitempty"`
+	FileUpload *FileUpload `json:"file_upload,omitempty"`
 }
 
 // GetURL returns the external or internal URL depending on the image type.
